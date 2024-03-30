@@ -1,0 +1,26 @@
+<div class="section-main">
+    <div class="flex flex-column">
+        <div class="grid">
+            <app-todo class="col-3 p-2" *ngFor="let todo of todos" [todo]="todo"></app-todo>
+        </div>
+        <div class="flex align-items-center justify-content-center border-round m-2">
+            <div class="flex flex-column">
+                <p-button (click)="toggleAddTodoForm()">Add New
+                    Todo</p-button>
+                <div *ngIf="showAddTodoForm">
+                    <form class="flex flex-column " #todoForm="ngForm" (submit)="addNewTodo()">
+                        <input class="flex align-items-center justify-content-center mt-2" type="text" pInputText
+                            placeholder="Todo Title" [(ngModel)]="newTodoTitle" name="title" required>
+                        <input class="flex align-items-center justify-content-center mt-2" type="text" pInputText
+                            placeholder="Todo Description" [(ngModel)]="newTodoDescription" name="description" required>
+                        <p-calendar class="flex align-items-center justify-content-center mt-2" placeholder="Due Date"
+                            [(ngModel)]="newTodoDueDate" name="dueDate"></p-calendar>
+                        <p-button class="flex align-items-center justify-content-center mt-2 " type="submit"
+                            [disabled]="!todoForm.valid">Add</p-button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
