@@ -1,0 +1,20 @@
+<form (ngSubmit)="updateTodo()" *ngIf="todo" class="mt-4">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title:</label>
+        <input type="text" [(ngModel)]="todo.title" name="title" id="title" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <textarea [(ngModel)]="todo.description" name="description" id="description" class="form-control"
+            required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="dueDate" class="form-label">Due Date:</label>
+        <input type="date" [(ngModel)]="todo.dueDate" name="dueDate" id="dueDate" class="form-control" required>
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" [(ngModel)]="todo.completed" name="completed" id="completed" class="form-check-input">
+        <label for="completed" class="form-check-label">Completed</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

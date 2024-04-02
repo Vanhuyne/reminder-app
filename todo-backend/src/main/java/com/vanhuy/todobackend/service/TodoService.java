@@ -7,6 +7,10 @@ import com.vanhuy.todobackend.repo.TodoRepo;
 import com.vanhuy.todobackend.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,5 +73,29 @@ public class TodoService {
                 .orElseThrow(() -> new IllegalArgumentException("Todo not found"));
 
         todoRepo.delete(todo);
+    }
+
+    // get todo by id
+    public TodoDTO getTodoById(Long todoId) {
+        Todo todo = todoRepo.findById(todoId)
+                .orElseThrow(() -> new IllegalArgumentException("Todo not found"));
+
+        // Convert Todo to TodoDTO
+        TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
+        todoDTO.setUserId(todo.getUser().getId());
+
+        return todoDTO;
+    }
+
+    //find all paginated
+    public Page<TodoDTO> findAllPaginated(int page, int size, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+        Page<Todo> resultPage = todoRepo.findAll(pageable);
+        // Convert Page<Todo> to Page<TodoDTO>
+        return resultPage.map(todo -> {
+            TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
+            todoDTO.setUserId(todo.getUser().getId());
+            return todoDTO;
+        });
     }
 }

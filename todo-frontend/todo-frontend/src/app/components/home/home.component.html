@@ -1,26 +1,48 @@
-<div class="section-main">
-    <div class="flex flex-column">
-        <div class="grid">
-            <app-todo class="col-3 p-2" *ngFor="let todo of todos" [todo]="todo"></app-todo>
-        </div>
-        <div class="flex align-items-center justify-content-center border-round m-2">
-            <div class="flex flex-column">
-                <p-button (click)="toggleAddTodoForm()">Add New
-                    Todo</p-button>
-                <div *ngIf="showAddTodoForm">
-                    <form class="flex flex-column " #todoForm="ngForm" (submit)="addNewTodo()">
-                        <input class="flex align-items-center justify-content-center mt-2" type="text" pInputText
-                            placeholder="Todo Title" [(ngModel)]="newTodoTitle" name="title" required>
-                        <input class="flex align-items-center justify-content-center mt-2" type="text" pInputText
-                            placeholder="Todo Description" [(ngModel)]="newTodoDescription" name="description" required>
-                        <p-calendar class="flex align-items-center justify-content-center mt-2" placeholder="Due Date"
-                            [(ngModel)]="newTodoDueDate" name="dueDate"></p-calendar>
-                        <p-button class="flex align-items-center justify-content-center mt-2 " type="submit"
-                            [disabled]="!todoForm.valid">Add</p-button>
-                    </form>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mb-2">
+            <div class="d-flex justify-content-end mb-2"> <!-- Use flex utilities to align the button to the right -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+                    New
+                    Todo</button>
             </div>
         </div>
+        <app-todo class="col-3 " *ngFor="let todo of todos" [todo]="todo" (delete)="deleteTodo($event)">
+        </app-todo>
+    </div>
 
+</div>
+<!-- Modal -->
+<div class="modal" id="exampleModal" name="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Todo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #todoForm="ngForm" (submit)="addNewTodo()">
+                    <div class="mb-3">
+                        <input class="form-control" type="text" pInputText placeholder="Todo Title"
+                            [(ngModel)]="newTodoTitle" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" type="text" pInputText placeholder="Todo Description"
+                            [(ngModel)]="newTodoDescription" name="description" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="startDate">Due Date</label>
+                        <input id="dueDate" class="form-control" type="date" placeholder="Due Date" name="dueDate"
+                            [(ngModel)]="newTodoDueDate" />
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary w-100" type="submit" [disabled]="!todoForm.valid">Add</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>

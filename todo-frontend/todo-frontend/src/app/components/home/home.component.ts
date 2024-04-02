@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TodoComponent } from '../todo/todo.component';
 import { Todo } from 'src/app/models/todos';
 import { HttpClient } from '@angular/common/http';
@@ -14,11 +14,10 @@ export class HomeComponent implements OnInit {
 
   newTodoTitle: string = '';
   newTodoDescription: string = '';
-  showAddTodoForm: boolean = false;
   newTodoDueDate: string = '';
 
   constructor(private service: TodoService) {}
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadTodos();
   }
 
@@ -42,19 +41,38 @@ export class HomeComponent implements OnInit {
       this.newTodoDescription = '';
       this.newTodoDueDate = '';
 
-      this.showAddTodoForm = false;
+      // close the modal
+      this.closeModal();
     });
   }
-
-  // action show form add todo
-  toggleAddTodoForm() {
-    this.showAddTodoForm = !this.showAddTodoForm;
+  closeModal() {
+    const modal = document.getElementById('exampleModal');
+    const backdrop = document.getElementsByClassName('modal-backdrop')[0];
+    if (modal != null && backdrop != null) {
+      modal.style.display = 'none';
+      backdrop.remove();
+    }
   }
 
   // fetch all todos
   loadTodos() {
     this.service.getAllTodos().subscribe((todos) => {
-      this.todos = todos;
+      this.todos = todos.content;
+      console.log('todos', todos);
     });
+  }
+
+  // action delete todo
+  deleteTodo(todoId: number) {
+    this.service.deleteTodoById(todoId).subscribe(
+      () => {
+        console.log('Todo deleted successfully');
+        // After deleting the todo, reload the todos
+        this.loadTodos();
+      },
+      (error) => {
+        console.error('Error deleting todo:', error);
+      }
+    );
   }
 }
