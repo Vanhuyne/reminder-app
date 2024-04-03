@@ -7,8 +7,20 @@
                     Todo</button>
             </div>
         </div>
-        <app-todo class="col-3 " *ngFor="let todo of todos" [todo]="todo" (delete)="deleteTodo($event)">
-        </app-todo>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-3" *ngFor="let todo of todos">
+                    <app-todo [todo]="todo" (delete)="deleteTodo($event)"></app-todo>
+                </div>
+            </div>
+            <div class="row mt-4 justify-content-center">
+                <div class="col-12">
+                    <ngb-pagination [(page)]="pageNo" [pageSize]="pageSize" [collectionSize]="totalElements"
+                        (pageChange)="onPageChange($event)" [maxSize]="5" [rotate]="true" [boundaryLinks]="true">
+                    </ngb-pagination>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

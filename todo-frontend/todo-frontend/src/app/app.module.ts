@@ -8,7 +8,7 @@ import { TodoComponent } from './components/todo/todo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule } from '@angular/forms';
-
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
 
@@ -25,6 +25,7 @@ import { TodoDetailsComponent } from './components/todo-details/todo-details.com
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NgbPaginationModule,
     // Import Angular forms module
     FormsModule,
   ],

@@ -12,6 +12,11 @@ import { TodoService } from 'src/app/service/todo.service';
 export class HomeComponent implements OnInit {
   todos: Todo[] = [];
 
+  pageNo: number = 0;
+  pageSize = 5;
+  sortBy = 'id';
+  totalElements = 0;
+
   newTodoTitle: string = '';
   newTodoDescription: string = '';
   newTodoDueDate: string = '';
@@ -32,9 +37,10 @@ export class HomeComponent implements OnInit {
 
     // Call the addTodo method of the TodoComponent
     this.service.addNewTodo(newTodo).subscribe((response) => {
-      console.log('response', response);
+      //console.log('response', response);
 
       this.loadTodos();
+      console.log(this.pageNo);
 
       // Reset the form
       this.newTodoTitle = '';
@@ -56,10 +62,27 @@ export class HomeComponent implements OnInit {
 
   // fetch all todos
   loadTodos() {
-    this.service.getAllTodos().subscribe((todos) => {
-      this.todos = todos.content;
-      console.log('todos', todos);
-    });
+    this.service
+      .getAllTodos(this.pageNo, this.pageSize, this.sortBy)
+      .subscribe((response: any) => {
+        //console.log('response', response);
+        this.todos = response.content;
+        this.totalElements = response.totalElements;
+      });
+    console.log(this.pageNo);
+  }
+
+  // set page
+  onPageChange(event: any) {
+    console.log('event', event);
+    this.pageNo = event - 1;
+
+    this.service
+      .getAllTodos(this.pageNo, this.pageSize, this.sortBy)
+      .subscribe((response: any) => {
+        this.todos = response.content;
+        this.totalElements = response.totalElements;
+      });
   }
 
   // action delete todo
@@ -67,8 +90,14 @@ export class HomeComponent implements OnInit {
     this.service.deleteTodoById(todoId).subscribe(
       () => {
         console.log('Todo deleted successfully');
+
         // After deleting the todo, reload the todos
-        this.loadTodos();
+        if (this.todos.length === 1) {
+          this.pageNo = this.pageNo - 1;
+          this.loadTodos();
+        } else {
+          this.loadTodos();
+        }
       },
       (error) => {
         console.error('Error deleting todo:', error);

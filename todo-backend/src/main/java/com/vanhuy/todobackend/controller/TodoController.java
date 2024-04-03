@@ -66,13 +66,14 @@ public class TodoController {
 
     @GetMapping
     public ResponseEntity<Page<TodoDTO>> getAllPaginated (@RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "5") int size,
                                                             @RequestParam(defaultValue = "id") String sortBy
     ) {
         Page<TodoDTO> resultPage  = todoService.findAllPaginated(page, size, sortBy);
         //List<TodoDTO> todoDTOS = resultPage.getContent().stream().toList();
         return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
+
 
 
 }
