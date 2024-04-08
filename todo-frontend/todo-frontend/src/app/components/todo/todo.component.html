@@ -1,20 +1,24 @@
-<div class="card mt-2" style="width: 18rem;">
+<div class="card mt-2">
     <div class="card-body">
-        <h5 class="card-title d-flex justify-content-between align-items-center">
-            <span>{{ todo.title }}</span>
-            <i class="bi bi-pencil btn" (click)="onTodoClick(todo.id)"></i> <!-- Update icon -->
-        </h5>
-        <p class="card-text">{{ todo.dueDate }}</p>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1"
-                [(ngModel)]="todo.completed">
-            <label class="form-check-label" for="defaultCheck1">
-                {{ todo.completed ? 'Completed' : 'Pending' }}
-            </label>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1"
+                        [(ngModel)]="todo.completed" (change)="updateTodoStatus()">
+                    <label class="form-check-label" for="defaultCheck1">
+                        {{ todo.completed ? 'Completed' : 'Pending' }}
+                    </label>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <i class="bi bi-pencil btn" (click)="onTodoClick(todo.id)"></i>
+                <i class="bi bi-trash3 btn text-danger" (click)="onDeleteClick()"></i>
+            </div>
         </div>
-        <span (click)="onDeleteClick()" class="btn badge bg-danger ">
-            Delete
-        </span>
+        <div class="row ms-2">
+            <h5 class="card-text" [ngClass]="{ 'completed-text': todo.completed }">{{ todo.title }} </h5>
+            <p>{{ todo.description }}</p>
+            <p class="text-danger">{{ todo.dueDate}}</p>
+        </div>
     </div>
-
-    <!-- Update form -->
+</div>

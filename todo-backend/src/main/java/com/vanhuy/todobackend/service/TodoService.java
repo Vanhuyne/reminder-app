@@ -88,8 +88,8 @@ public class TodoService {
     }
 
     //find all paginated
-    public Page<TodoDTO> findAllPaginated(int page, int size, String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+    public Page<TodoDTO> findAllPaginated(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Todo> resultPage = todoRepo.findAll(pageable);
         // Convert Page<Todo> to Page<TodoDTO>
         return resultPage.map(todo -> {

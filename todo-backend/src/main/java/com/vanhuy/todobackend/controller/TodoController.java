@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/todos")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
@@ -66,10 +66,10 @@ public class TodoController {
 
     @GetMapping
     public ResponseEntity<Page<TodoDTO>> getAllPaginated (@RequestParam(defaultValue = "0") int page,
-                                                          @RequestParam(defaultValue = "5") int size,
-                                                            @RequestParam(defaultValue = "id") String sortBy
+                                                          @RequestParam(defaultValue = "5") int size
+
     ) {
-        Page<TodoDTO> resultPage  = todoService.findAllPaginated(page, size, sortBy);
+        Page<TodoDTO> resultPage  = todoService.findAllPaginated(page, size);
         //List<TodoDTO> todoDTOS = resultPage.getContent().stream().toList();
         return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }

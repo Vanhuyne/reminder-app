@@ -12,10 +12,9 @@ import { TodoService } from 'src/app/service/todo.service';
 export class HomeComponent implements OnInit {
   todos: Todo[] = [];
 
-  pageNo: number = 0;
-  pageSize = 5;
-  sortBy = 'id';
-  totalElements = 0;
+  totalItems: number = 0;
+  currentPage: number = 1;
+  pageSize: number = 3;
 
   newTodoTitle: string = '';
   newTodoDescription: string = '';
@@ -31,8 +30,8 @@ export class HomeComponent implements OnInit {
       userId: 1, // chưa có user nên để 4
       title: this.newTodoTitle,
       description: this.newTodoDescription,
-      dueDate: this.newTodoDueDate, // You may adjust this according to your requirements
-      completed: false, // New todos are initially not completed
+      dueDate: this.newTodoDueDate,
+      completed: false,
     };
 
     // Call the addTodo method of the TodoComponent
@@ -40,7 +39,6 @@ export class HomeComponent implements OnInit {
       //console.log('response', response);
 
       this.loadTodos();
-      console.log(this.pageNo);
 
       // Reset the form
       this.newTodoTitle = '';
@@ -51,6 +49,7 @@ export class HomeComponent implements OnInit {
       this.closeModal();
     });
   }
+
   closeModal() {
     const modal = document.getElementById('exampleModal');
     const backdrop = document.getElementsByClassName('modal-backdrop')[0];
@@ -63,28 +62,19 @@ export class HomeComponent implements OnInit {
   // fetch all todos
   loadTodos() {
     this.service
-      .getAllTodos(this.pageNo, this.pageSize, this.sortBy)
+      .fetchPaginatedTodos(this.currentPage - 1, this.pageSize)
       .subscribe((response: any) => {
-        //console.log('response', response);
         this.todos = response.content;
-        this.totalElements = response.totalElements;
+        console.log('todos', this.todos);
+        this.totalItems = response.totalElements;
       });
-    console.log(this.pageNo);
   }
 
   // set page
-  onPageChange(event: any) {
-    console.log('event', event);
-    this.pageNo = event - 1;
-
-    this.service
-      .getAllTodos(this.pageNo, this.pageSize, this.sortBy)
-      .subscribe((response: any) => {
-        this.todos = response.content;
-        this.totalElements = response.totalElements;
-      });
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadTodos();
   }
-
   // action delete todo
   deleteTodo(todoId: number) {
     this.service.deleteTodoById(todoId).subscribe(
@@ -93,7 +83,6 @@ export class HomeComponent implements OnInit {
 
         // After deleting the todo, reload the todos
         if (this.todos.length === 1) {
-          this.pageNo = this.pageNo - 1;
           this.loadTodos();
         } else {
           this.loadTodos();

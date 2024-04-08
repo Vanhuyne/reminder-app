@@ -9,7 +9,7 @@ import { TodoService } from 'src/app/service/todo.service';
   styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: TodoService) {}
   @Input() todo!: Todo;
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
 
@@ -18,10 +18,23 @@ export class TodoComponent {
   }
   // Property to hold the selected todo for updating
 
-  onUpdateClick() {
-    // Set the selected todo when the update icon is clicked
+  updateTodoStatus() {
+    // Check if todo and its id are defined before making the API call
+    if (this.todo && this.todo.id !== undefined) {
+      // Call the updateTodoById method with the todo's ID and the updated todo object
+      this.service.updateTodoById(this.todo.id, this.todo).subscribe(
+        (updatedTodo) => {
+          this.todo = updatedTodo;
+        },
+        (error) => {
+          console.error('Error updating todo:', error);
+        }
+      );
+    } else {
+      console.error('Todo or todo ID is undefined.');
+    }
   }
-  onTodoClick(todoId?: number) {
+  onTodoClick(todoId: number = 0) {
     this.router.navigate(['/todos', todoId]);
   }
 }
