@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
 import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 // khai báo các module cần thiết cho ứng dụng
 @NgModule({
@@ -19,6 +22,9 @@ import { TodoDetailsComponent } from './components/todo-details/todo-details.com
     TodoComponent,
     HomeComponent,
     TodoDetailsComponent,
+    LoginComponent,
+    DashboardComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

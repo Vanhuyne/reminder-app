@@ -5,23 +5,24 @@ import com.vanhuy.todobackend.entity.Todo;
 import com.vanhuy.todobackend.entity.User;
 import com.vanhuy.todobackend.repo.TodoRepo;
 import com.vanhuy.todobackend.repo.UserRepo;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TodoService {
-    private final TodoRepo todoRepo;
-    private final ModelMapper modelMapper;
-    private final UserRepo userRepo;
+    TodoRepo todoRepo;
+    ModelMapper modelMapper;
+    UserRepo userRepo;
 
     public List<TodoDTO> getAllTodos() {
         List<Todo> todos = todoRepo.findAll();

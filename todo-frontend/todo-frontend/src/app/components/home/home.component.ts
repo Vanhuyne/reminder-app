@@ -36,11 +36,8 @@ export class HomeComponent implements OnInit {
 
     // Call the addTodo method of the TodoComponent
     this.service.addNewTodo(newTodo).subscribe((response) => {
-      //console.log('response', response);
-
       this.loadTodos();
 
-      // Reset the form
       this.newTodoTitle = '';
       this.newTodoDescription = '';
       this.newTodoDueDate = '';
@@ -71,7 +68,7 @@ export class HomeComponent implements OnInit {
   }
 
   // set page
-  onPageChange(page: number) {
+  onPageChange(page: number): void {
     this.currentPage = page;
     this.loadTodos();
   }
@@ -92,5 +89,10 @@ export class HomeComponent implements OnInit {
         console.error('Error deleting todo:', error);
       }
     );
+  }
+
+  // Calculate total pages based on total items and page size
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.pageSize);
   }
 }

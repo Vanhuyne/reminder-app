@@ -1,7 +1,6 @@
 package com.vanhuy.todobackend.controller;
 
 import com.vanhuy.todobackend.dtos.TodoDTO;
-import com.vanhuy.todobackend.entity.Todo;
 import com.vanhuy.todobackend.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,17 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/todos")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/todos")
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
-
-//    @GetMapping
-//    public ResponseEntity<List<TodoDTO>> getAllTodos() {
-//        List<TodoDTO> todos = todoService.getAllTodos();
-//        return new ResponseEntity<>(todos, HttpStatus.OK);
-//    }
 
     @PostMapping
     public ResponseEntity<TodoDTO> create(@RequestBody TodoDTO todoDTO) {

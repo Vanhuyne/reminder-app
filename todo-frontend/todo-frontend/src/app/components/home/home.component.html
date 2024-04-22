@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-12 mb-2">
             <div class="d-flex justify-content-end mb-2"> <!-- Use flex utilities to align the button to the right -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
+                <button type="button" class="btn btn-primary" data-bs-toggle="authentication-modal"
+                    data-bs-target="authentication-modal">Add
                     New
                     Todo</button>
             </div>
@@ -17,14 +18,33 @@
                 <div class="col-12">
                     <ngb-pagination [collectionSize]="totalItems" [(page)]="currentPage" [pageSize]="pageSize"
                         (pageChange)="onPageChange($event)"></ngb-pagination>
+
+                    <!---->
+                    <nav class="flex items-center justify-center" aria-label="Pagination">
+                        Previous page button
+                        <button [disabled]="currentPage" (click)="onPageChange(currentPage - 1)"
+                            class="px-3 py-1 border border-gray-300 rounded-md mr-2 bg-white text-gray-700 hover:bg-gray-100">
+                            Previous
+                        </button>
+                        <!-- Pagination items (page numbers) -->
+                        <div>
+                            <span class="mr-2">Page {{ currentPage }} of {{ totalPages }}</span>
+                        </div>
+                        <!-- Next page button -->
+                        <button [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)"
+                            class="px-3 py-1 border border-gray-300 rounded-md ml-2 bg-white text-gray-700 hover:bg-gray-100">
+                            Next
+                        </button>
+                    </nav>
                 </div>
+
             </div>
         </div>
     </div>
 
 </div>
 <!-- Modal -->
-<div class="modal" id="exampleModal" name="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+<div class="modal" id="authentication-modal" name="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
