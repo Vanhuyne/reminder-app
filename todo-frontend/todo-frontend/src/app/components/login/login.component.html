@@ -1,23 +1,22 @@
-<div class="d-flex flex-column justify-content-center container container-border shadow p-3 mb-5 bg-body rounded">
+<div class="d-flex flex-column justify-content-center container container-border shadow p-3 mb-5 bg-body rounded-4">
     <div class="mx-auto text-center">
         <h2 class="">Sign in to your account</h2>
     </div>
 
     <div class="mt-1 p-3">
-        <form class="px-2" (ngSubmit)="login()">
+        <form class="px-2  " (ngSubmit)="login()">
             <div class="mt-4 pt-2 ">
                 <label for="email" class="form-label">Email address</label>
                 <div class="input-group">
-                    <span class="input-group-text fw-bold " id="basic-addon1"><i class="bi bi-envelope"></i></span>
-                    <input id="email" name="email" type="email" autocomplete="email" required [(ngModel)]="email"
-                        #emailInput="ngModel" class="form-control p-2 text-secondary" style="line-height: 28px;"
+                    <span class="input-group-text " id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                    <input id="email" name="email" type="email" required [(ngModel)]="email" #emailInput="ngModel"
+                        class="form-control p-2 text-secondary" style="line-height: 28px;"
                         [class.is-invalid]="email.length > 0 && !isValidEmail()">
                     <div *ngIf="email.length > 0 && !isValidEmail()" class="invalid-feedback">
                         Please enter a valid email.
                     </div>
                 </div>
             </div>
-
             <div class="mt-4 pt-2">
                 <div class="d-flex justify-content-between">
                     <label for="password" class="form-label">Password</label>
@@ -27,8 +26,8 @@
                 </div>
                 <div class="input-group ">
                     <span class="input-group-text " id="basic-addon1"><i class="bi bi-bag"></i></span>
-                    <input id="password" name="password" type="password" autocomplete="current-password" required
-                        [(ngModel)]="password" #passwordInput="ngModel" class="form-control p-2 text-secondary"
+                    <input id="password" name="password" type="password" required [(ngModel)]="password"
+                        #passwordInput="ngModel" class="form-control p-2 text-secondary"
                         [class.is-invalid]="password.length > 0 && !isValidPassword()" style="line-height: 28px;">
                     <div *ngIf="password.length > 0 && !isValidPassword()" class="invalid-feedback">
                         Please enter a password.

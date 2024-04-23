@@ -21,8 +21,12 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },
       (error) => {
-        console.log(error);
-        this.errorMessage = 'Username or password is incorrect';
+        if (error.error.message != null) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage =
+            'Email or password is incorrect. Please try again.';
+        }
       }
     );
   }

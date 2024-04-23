@@ -54,10 +54,19 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log(decodedToken.roles);
+      console.log(decodedToken);
 
       return decodedToken.roles;
     }
     return [];
+  }
+
+  getEmailFormToken() {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken.sub;
+    }
+    return null;
   }
 }

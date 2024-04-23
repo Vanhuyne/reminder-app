@@ -60,12 +60,20 @@ public class TodoController {
     public ResponseEntity<Page<TodoDTO>> getAllPaginated (@RequestParam(defaultValue = "0") int page,
                                                           @RequestParam(defaultValue = "5") int size
 
+
     ) {
+
         Page<TodoDTO> resultPage  = todoService.findAllPaginated(page, size);
-        //List<TodoDTO> todoDTOS = resultPage.getContent().stream().toList();
         return new ResponseEntity<>(resultPage, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{email}")
+    public ResponseEntity<Page<TodoDTO>> getAllByUserEmail(@PathVariable String email,
+                                                           @RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "5") int size ){
+        Page<TodoDTO> todos = todoService.findAllPaginatedByEmail(email, page, size);
+        return new ResponseEntity<>(todos, HttpStatus.OK);
+    }
 
 
 }

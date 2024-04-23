@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Data
 public class TodoDTO {
     private Long id;
-    private Long userId;
+    private String userEmail;
     private String title;
     private String description;
     private LocalDate dueDate;

@@ -14,12 +14,17 @@ export class TodoService {
     return this.http.get<any>(this.baseUrl);
   }
 
-  fetchPaginatedTodos(pageNumber: number, pageSize: number): Observable<any> {
+  fetchPaginatedTodos(
+    pageNumber: number,
+    pageSize: number,
+    email: string
+  ): Observable<any> {
+    const url = `${this.baseUrl}/user/${email}`;
     const params = new HttpParams()
       .set('page', pageNumber.toString())
       .set('size', pageSize.toString());
 
-    return this.http.get<any>(this.baseUrl, { params });
+    return this.http.get<any>(url, { params });
   }
 
   getTodoById(todoId: number): Observable<Todo> {

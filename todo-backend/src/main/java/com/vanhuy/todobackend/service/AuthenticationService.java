@@ -1,18 +1,21 @@
 package com.vanhuy.todobackend.service;
 
 import com.vanhuy.todobackend.config.JwtService;
+import com.vanhuy.todobackend.dtos.AuthenticationRequest;
+import com.vanhuy.todobackend.dtos.AuthenticationResponse;
+import com.vanhuy.todobackend.dtos.RegisterRequest;
 import com.vanhuy.todobackend.entity.*;
+import com.vanhuy.todobackend.exception.AuthenticationException;
 import com.vanhuy.todobackend.repo.RoleRepo;
 import com.vanhuy.todobackend.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,23 +57,25 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        Optional<User> userOptional = userRepo.findByEmail(request.getEmail());
-        if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
-        }
-        User user = userOptional.get();
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword(),
-                        user.getAuthorities()
-                )
-        );
+        try {
+            User user = userRepo.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new AuthenticationException("Email does not exist"));
 
-        // authenticate user
-        var token = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(token)
-                .build();
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword(),
+                            user.getAuthorities()
+                    )
+            );
+
+            // authenticate user
+            var token = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .token(token)
+                    .build();
+        } catch (BadCredentialsException e) {
+            throw new AuthenticationException("Password is incorrect");
+        }
     }
 }

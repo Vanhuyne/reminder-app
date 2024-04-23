@@ -18,28 +18,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TodoService {
-    TodoRepo todoRepo;
-    ModelMapper modelMapper;
-    UserRepo userRepo;
+    private final TodoRepo todoRepo;
+    private final ModelMapper modelMapper;
+    private final UserRepo userRepo;
 
-    public List<TodoDTO> getAllTodos() {
-        List<Todo> todos = todoRepo.findAll();
-
-        // Convert List<Todo> to List<TodoDTO>
-        return todos.stream()
-                .map(todo ->{
-                            TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
-                            todoDTO.setUserId(todo.getUser().getId());
-                            return todoDTO;
-                        }
-                )
-                .toList();
-    }
 
     public TodoDTO create(TodoDTO todoDTO) {
-        User user = userRepo.findById(todoDTO.getUserId())
+        User user = userRepo.findByEmail(todoDTO.getUserEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Todo todo = modelMapper.map(todoDTO, Todo.class);
@@ -63,7 +49,7 @@ public class TodoService {
 
         // Convert Todo to TodoDTO
         TodoDTO todoDTOResponse = modelMapper.map(updatedTodo, TodoDTO.class);
-        todoDTOResponse.setUserId(updatedTodo.getUser().getId());
+        todoDTOResponse.setUserEmail(updatedTodo.getUser().getEmail());
 
         return todoDTOResponse;
     }
@@ -83,7 +69,7 @@ public class TodoService {
 
         // Convert Todo to TodoDTO
         TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
-        todoDTO.setUserId(todo.getUser().getId());
+        todoDTO.setUserEmail(todo.getUser().getEmail());
 
         return todoDTO;
     }
@@ -95,8 +81,21 @@ public class TodoService {
         // Convert Page<Todo> to Page<TodoDTO>
         return resultPage.map(todo -> {
             TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
-            todoDTO.setUserId(todo.getUser().getId());
+            todoDTO.setUserEmail(todo.getUser().getEmail());
             return todoDTO;
         });
     }
+
+    // find all paginated todos by email of user
+    public Page<TodoDTO> findAllPaginatedByEmail(String email, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Todo> resultPage = todoRepo.findAllByUserEmail(email, pageable);
+        // Convert Page<Todo> to Page<TodoDTO>
+        return resultPage.map(todo -> {
+            TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
+            todoDTO.setUserEmail(todo.getUser().getEmail());
+            return todoDTO;
+        });
+    }
+
 }

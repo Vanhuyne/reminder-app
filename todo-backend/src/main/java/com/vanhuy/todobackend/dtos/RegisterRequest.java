@@ -1,11 +1,10 @@
-package com.vanhuy.todobackend.entity;
+package com.vanhuy.todobackend.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Data

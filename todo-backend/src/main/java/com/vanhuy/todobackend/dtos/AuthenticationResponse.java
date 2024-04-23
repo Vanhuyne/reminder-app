@@ -1,4 +1,4 @@
-package com.vanhuy.todobackend.entity;
+package com.vanhuy.todobackend.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationRequest {
-    private String email;
-    private String password;
+@Builder
+public class AuthenticationResponse {
+    private String token;
+    private String message;
 
 }

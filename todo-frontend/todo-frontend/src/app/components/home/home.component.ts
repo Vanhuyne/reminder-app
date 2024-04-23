@@ -3,6 +3,7 @@ import { TodoComponent } from '../todo/todo.component';
 import { Todo } from 'src/app/models/todos';
 import { HttpClient } from '@angular/common/http';
 import { TodoService } from 'src/app/service/todo.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,8 @@ import { TodoService } from 'src/app/service/todo.service';
 export class HomeComponent implements OnInit {
   todos: Todo[] = [];
 
+  email: string = '';
+
   totalItems: number = 0;
   currentPage: number = 1;
   pageSize: number = 3;
@@ -20,14 +23,14 @@ export class HomeComponent implements OnInit {
   newTodoDescription: string = '';
   newTodoDueDate: string = '';
 
-  constructor(private service: TodoService) {}
+  constructor(private service: TodoService, private authService: AuthService) {}
   ngOnInit() {
     this.loadTodos();
   }
 
   addNewTodo() {
     const newTodo: Todo = {
-      userId: 1, // chưa có user nên để 4
+      userEmail: this.getEmailFormLocalStorage(), // chưa có user nên để 4
       title: this.newTodoTitle,
       description: this.newTodoDescription,
       dueDate: this.newTodoDueDate,
@@ -36,30 +39,19 @@ export class HomeComponent implements OnInit {
 
     // Call the addTodo method of the TodoComponent
     this.service.addNewTodo(newTodo).subscribe((response) => {
-      this.loadTodos();
-
       this.newTodoTitle = '';
       this.newTodoDescription = '';
       this.newTodoDueDate = '';
 
-      // close the modal
-      this.closeModal();
+      this.loadTodos();
     });
-  }
-
-  closeModal() {
-    const modal = document.getElementById('exampleModal');
-    const backdrop = document.getElementsByClassName('modal-backdrop')[0];
-    if (modal != null && backdrop != null) {
-      modal.style.display = 'none';
-      backdrop.remove();
-    }
   }
 
   // fetch all todos
   loadTodos() {
+    this.email = this.getEmailFormLocalStorage();
     this.service
-      .fetchPaginatedTodos(this.currentPage - 1, this.pageSize)
+      .fetchPaginatedTodos(this.currentPage - 1, this.pageSize, this.email)
       .subscribe((response: any) => {
         this.todos = response.content;
         console.log('todos', this.todos);
@@ -94,5 +86,9 @@ export class HomeComponent implements OnInit {
   // Calculate total pages based on total items and page size
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.pageSize);
+  }
+
+  getEmailFormLocalStorage() {
+    return this.authService.getEmailFormToken();
   }
 }

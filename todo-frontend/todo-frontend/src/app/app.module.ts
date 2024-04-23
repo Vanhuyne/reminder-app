@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TodoComponent } from './components/todo/todo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,6 +14,7 @@ import { TodoDetailsComponent } from './components/todo-details/todo-details.com
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { InterceptorInterceptor } from './intercepor/interceptor.interceptor';
 
 // khai báo các module cần thiết cho ứng dụng
 @NgModule({
@@ -35,7 +36,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     // Import Angular forms module
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    // Add the interceptor to the providers array
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

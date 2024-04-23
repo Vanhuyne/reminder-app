@@ -20,19 +20,22 @@
                 </ul>
             </div>
             <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="email">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        User
+                        {{email}}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
                     </ul>
+                </li>
+                <li class="nav-item" *ngIf="!email">
+                    <div class="d-flex ">
+                        <a class="nav-link text-dark" href="/login">Login</a>
+                        <div class="flex-grow-2 mt-2">|</div> <!-- Flexible empty space -->
+                        <a class="nav-link text-dark" href="/register">Register</a>
+                    </div>
                 </li>
             </ul>
 
