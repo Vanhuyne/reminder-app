@@ -1,4 +1,4 @@
-package com.vanhuy.todobackend.config;
+package com.vanhuy.todobackend.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

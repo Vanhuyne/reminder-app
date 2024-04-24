@@ -1,20 +1,18 @@
 package com.vanhuy.todobackend.controller;
 
 import com.vanhuy.todobackend.dtos.TodoDTO;
-import com.vanhuy.todobackend.service.TodoService;
+import com.vanhuy.todobackend.service.implementation.TodoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/todos")
 @RequiredArgsConstructor
 public class TodoController {
-    private final TodoService todoService;
+    private final TodoServiceImpl todoService;
 
     @PostMapping
     public ResponseEntity<TodoDTO> create(@RequestBody TodoDTO todoDTO) {

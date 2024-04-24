@@ -1,6 +1,6 @@
 package com.vanhuy.todobackend.config;
 
-import com.vanhuy.todobackend.entity.User;
+import com.vanhuy.todobackend.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

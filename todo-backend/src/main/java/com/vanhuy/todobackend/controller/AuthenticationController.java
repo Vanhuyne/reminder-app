@@ -5,6 +5,7 @@ import com.vanhuy.todobackend.dtos.AuthenticationResponse;
 import com.vanhuy.todobackend.dtos.RegisterRequest;
 import com.vanhuy.todobackend.exception.AuthenticationException;
 import com.vanhuy.todobackend.service.AuthenticationService;
+import com.vanhuy.todobackend.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    private final EmailService emailService;
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(AuthenticationController.class);
 
     @PostMapping("/register")
@@ -45,4 +47,7 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
     }
+
+
+
 }
