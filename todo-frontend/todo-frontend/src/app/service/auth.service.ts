@@ -15,6 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
+    localStorage.removeItem(this.TOKEN_KEY);
     const url = `${this.urlAuth}/authenticate`;
     debugger;
     return this.http.post<any>(url, { email, password }).pipe(
@@ -39,6 +40,7 @@ export class AuthService {
     const token = this.getToken();
     return token != null && !this.isTokenExpired(token);
   }
+
   isTokenExpired(token: string): boolean {
     return this.jwtHelper.isTokenExpired(token);
   }

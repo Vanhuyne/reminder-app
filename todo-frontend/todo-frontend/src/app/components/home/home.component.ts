@@ -4,6 +4,7 @@ import { Todo } from 'src/app/models/todos';
 import { HttpClient } from '@angular/common/http';
 import { TodoService } from 'src/app/service/todo.service';
 import { AuthService } from 'src/app/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -23,9 +24,19 @@ export class HomeComponent implements OnInit {
   newTodoDescription: string = '';
   newTodoDueDate: string = '';
 
-  constructor(private service: TodoService, private authService: AuthService) {}
+  constructor(
+    private service: TodoService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
   ngOnInit() {
-    this.loadTodos();
+    if (!this.authService.isLoggedIn()) {
+      // redirect to login page
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    } else {
+      this.loadTodos();
+    }
   }
 
   addNewTodo() {

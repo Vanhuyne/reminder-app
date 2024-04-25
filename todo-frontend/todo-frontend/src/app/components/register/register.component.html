@@ -1,0 +1,85 @@
+<div
+    class="d-flex flex-column justify-content-center container container-border shadow p-3 mb-5 bg-body rounded-4 mt-4">
+    <div class="mx-auto text-center">
+        <h2 class="fw-bold pt-3">Sign up</h2>
+    </div>
+    <div class="mt-1 p-2">
+        <form class="px-2" (ngSubmit)=" register()">
+            <div class="mt-3 pt-2">
+                <label class="form-label" for="firstName">First Name</label>
+                <div class="input-group">
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-user px-1"></i></span>
+                    <input type="text" id="firstName" [(ngModel)]="registerRequest.firstName" name="firstName"
+                        class="form-control p-2 text-dark" style="line-height: 28px;"
+                        [class.is-invalid]="registerRequest.firstName.length > 0 " required>
+                    <div *ngIf="" class="invalid-feedback">
+                        Please enter your fist name.
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 pt-2 ">
+                <label class="form-label" for="lastName">Last Name</label>
+                <div class="input-group">
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-user px-1"></i></span>
+                    <input type="text" id="lastName" [(ngModel)]="registerRequest.lastName" name="lastName"
+                        class="form-control p-2 text-dark" style="line-height: 28px;"
+                        [class.is-invalid]="registerRequest.lastName.length > 0 " required>
+                    <div *ngIf="" class="invalid-feedback">
+                        Please enter your last name.
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 pt-2 ">
+                <label class="form-label" for="email">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-envelope px-1"></i></span>
+                    <input type="email" id="email" [(ngModel)]="registerRequest.email" name="email"
+                        class="form-control p-2 text-dark" style="line-height: 28px;" (change)="registerRequest.email"
+                        [class.is-invalid]="registerRequest.email.length == 0 " required>
+                    <div *ngIf="registerRequest.email.length > 0 " class="invalid-feedback">
+                        Please enter a valid email. </div>
+                </div>
+            </div>
+            <div class="mt-3 pt-2 ">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Password</label>
+                </div>
+                <div class="input-group ">
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-solid fa-lock px-1"></i></span>
+                    <input [type]="passwordField1Type" id="password" [(ngModel)]="registerRequest.password"
+                        name="password" class="form-control p-2 text-dark" style="line-height: 28px;"
+                        [class.is-invalid]="registerRequest.password.length > 0 " required>
+                    <button class="btn btn-outline-secondary border border-1 " type="button"
+                        (click)="togglePasswordVisibility(1)">
+                        <i [ngClass]="passwordField1Type === 'password' ?'fas fa-eye-slash ' :'fas fa-eye '"></i>
+                    </button>
+                    <div *ngIf="registerRequest.email.length > 0 " class="invalid-feedback">
+                        Please enter your password. </div>
+                </div>
+            </div>
+            <div class="mt-3 pt-2 ">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-solid fa-lock px-1"></i></span>
+                    <input [type]="passwordField2Type" id="confirmPassword" [(ngModel)]="confirmPassword"
+                        name="confirmPassword" class="form-control p-2 text-dark" style="line-height: 28px;"
+                        [class.is-invalid]="confirmPassword.length > 0 " required>
+                    <button class="btn btn-outline-secondary border border-1" type="button"
+                        (click)="togglePasswordVisibility(2)">
+                        <i [ngClass]="passwordField2Type === 'password' ?'fas fa-eye-slash' :'fas fa-eye '"></i>
+                    </button>
+                    <div *ngIf="confirmPassword.length > 0 " class="invalid-feedback">
+                        Please enter your comfirm password. </div>
+                </div>
+            </div>
+            <!-- Optionally include fields for roles if needed -->
+            <div class="mt-3 pt-3">
+                <button class="btn btn-primary w-100 p-2" type="submit" style="line-height: 28px;">Register</button>
+            </div>
+
+        </form>
+        <p class="mt-4 text-center ">Already have an account? <a routerLink="/login">Login</a></p>
+        <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            <span class="fw-nomal">{{errorMessage}}</span>
+        </div>
+    </div>

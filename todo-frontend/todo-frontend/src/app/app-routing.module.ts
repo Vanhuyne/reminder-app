@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guard/auth-guard.guard';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {
@@ -14,12 +15,13 @@ const routes: Routes = [
     data: { roles: ['ROLE_USER'] }, // Specify roles in the desired format
   },
   { path: 'todos/:id', component: TodoDetailsComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'admin',
     component: DashboardComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['ROLE_ADMIN'] }, // Specify roles in the desired format
+    data: { roles: ['ROLE_ADMIN'] },
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }, // Handle invalid routes

@@ -1,6 +1,6 @@
 <div class="d-flex flex-column justify-content-center container container-border shadow p-3 mb-5 bg-body rounded-4">
     <div class="mx-auto text-center">
-        <h2 class="">Sign in to your account</h2>
+        <h2 class="fw-bold">Sign in to your account</h2>
     </div>
 
     <div class="mt-1 p-3">
@@ -8,12 +8,12 @@
             <div class="mt-4 pt-2 ">
                 <label for="email" class="form-label">Email address</label>
                 <div class="input-group">
-                    <span class="input-group-text " id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-envelope px-1"></i></span>
                     <input id="email" name="email" type="email" required [(ngModel)]="email" #emailInput="ngModel"
-                        class="form-control p-2 text-secondary" style="line-height: 28px;"
+                        class="form-control p-2 text-dark" style="line-height: 28px;"
                         [class.is-invalid]="email.length > 0 && !isValidEmail()">
                     <div *ngIf="email.length > 0 && !isValidEmail()" class="invalid-feedback">
-                        Please enter a valid email.
+                        Please enter your email.
                     </div>
                 </div>
             </div>
@@ -25,10 +25,14 @@
                     </div>
                 </div>
                 <div class="input-group ">
-                    <span class="input-group-text " id="basic-addon1"><i class="bi bi-bag"></i></span>
-                    <input id="password" name="password" type="password" required [(ngModel)]="password"
-                        #passwordInput="ngModel" class="form-control p-2 text-secondary"
-                        [class.is-invalid]="password.length > 0 && !isValidPassword()" style="line-height: 28px;">
+                    <span class="input-group-text " id="basic-addon1"><i class="fa-solid fa-lock px-1"></i></span>
+                    <input id="password" name="password" [type]="passwordFieldType" required [(ngModel)]="password"
+                        #passwordInput="ngModel" class="form-control p-2 text-dark"
+                        [class.is-invalid]="password.length > 0 && !isValidPassword() " style="line-height: 28px;">
+                    <button class="btn btn-outline-secondary border border-1" type="button"
+                        (click)="togglePasswordVisibility()">
+                        <i [ngClass]="passwordFieldType === 'password' ? 'fas fa-eye-slash':'fas fa-eye ' "></i>
+                    </button>
                     <div *ngIf="password.length > 0 && !isValidPassword()" class="invalid-feedback">
                         Please enter a password.
                     </div>
@@ -42,7 +46,7 @@
             </div>
         </form>
 
-        <p class="mt-5 text-center ">Not a member? <a href="#">Register now</a>
+        <p class="mt-5 text-center ">Not a member? <a routerLink="/register">Register now</a>
         </p>
         <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
             <span class="fw-nomal">{{errorMessage}}</span>

@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { InterceptorInterceptor } from './intercepor/interceptor.interceptor';
+import { RegisterComponent } from './components/register/register.component';
 
 // khai báo các module cần thiết cho ứng dụng
 @NgModule({
@@ -26,6 +27,7 @@ import { InterceptorInterceptor } from './intercepor/interceptor.interceptor';
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
