@@ -36,6 +36,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
+        // check if email exists
+        if (userRepo.findByEmail(request.getEmail()).isPresent()) {
+            throw new AuthenticationException("Email already exists");
+        }
         // default role is user
         Set<String> requestRoles = request.getRoles();
         if (requestRoles == null || requestRoles.isEmpty()) {

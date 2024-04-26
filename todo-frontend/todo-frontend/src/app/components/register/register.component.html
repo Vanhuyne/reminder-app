@@ -5,81 +5,90 @@
     </div>
     <div class="mt-1 p-2">
         <form class="px-2" (ngSubmit)=" register()">
-            <div class="mt-3 pt-2">
+            <div class="mt-3 pt-1">
                 <label class="form-label" for="firstName">First Name</label>
-                <div class="input-group">
+                <div class="input-group has-validation">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-user px-1"></i></span>
                     <input type="text" id="firstName" [(ngModel)]="registerRequest.firstName" name="firstName"
                         class="form-control p-2 text-dark" style="line-height: 28px;"
-                        [class.is-invalid]="registerRequest.firstName.length > 0 " required>
-                    <div *ngIf="" class="invalid-feedback">
-                        Please enter your fist name.
+                        [class.is-invalid]="registerRequest.firstName.length === 0 " required>
+                    <div *ngIf="registerRequest.firstName.length === 0" class="invalid-feedback">
+                        Please enter your first name.
                     </div>
                 </div>
             </div>
-            <div class="mt-3 pt-2 ">
+            <div class="mt-3 pt-1 ">
                 <label class="form-label" for="lastName">Last Name</label>
-                <div class="input-group">
+                <div class="input-group has-validation">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-user px-1"></i></span>
                     <input type="text" id="lastName" [(ngModel)]="registerRequest.lastName" name="lastName"
                         class="form-control p-2 text-dark" style="line-height: 28px;"
-                        [class.is-invalid]="registerRequest.lastName.length > 0 " required>
-                    <div *ngIf="" class="invalid-feedback">
+                        [class.is-invalid]="registerRequest.lastName.length === 0 " required>
+                    <div *ngIf="registerRequest.lastName.length === 0" class="invalid-feedback">
                         Please enter your last name.
                     </div>
                 </div>
             </div>
-            <div class="mt-3 pt-2 ">
-                <label class="form-label" for="email">Email</label>
-                <div class="input-group">
+            <div class="mt-3 pt-1 ">
+                <label class="form-label " for="email">Email</label>
+                <div class="input-group has-validation">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-envelope px-1"></i></span>
                     <input type="email" id="email" [(ngModel)]="registerRequest.email" name="email"
-                        class="form-control p-2 text-dark" style="line-height: 28px;" (change)="registerRequest.email"
-                        [class.is-invalid]="registerRequest.email.length == 0 " required>
-                    <div *ngIf="registerRequest.email.length > 0 " class="invalid-feedback">
-                        Please enter a valid email. </div>
+                        class="form-control p-2 text-dark" style="line-height: 28px;" required #email="ngModel"
+                        [class.is-invalid]="registerRequest.email.length === 0 || !isValidEmail()">
+
+                    <div *ngIf="registerRequest.email.length == 0 || !isValidEmail()" class="invalid-feedback">
+                        Please enter a valid email.
+                    </div>
+
                 </div>
             </div>
-            <div class="mt-3 pt-2 ">
+            <div class="mt-3 pt-1 ">
                 <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
                 </div>
-                <div class="input-group ">
+                <div class="input-group has-validation ">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-solid fa-lock px-1"></i></span>
                     <input [type]="passwordField1Type" id="password" [(ngModel)]="registerRequest.password"
                         name="password" class="form-control p-2 text-dark" style="line-height: 28px;"
-                        [class.is-invalid]="registerRequest.password.length > 0 " required>
+                        [class.is-invalid]="registerRequest.password.length === 0 || !isValidPassword()" required>
                     <button class="btn btn-outline-secondary border border-1 " type="button"
                         (click)="togglePasswordVisibility(1)">
                         <i [ngClass]="passwordField1Type === 'password' ?'fas fa-eye-slash ' :'fas fa-eye '"></i>
                     </button>
-                    <div *ngIf="registerRequest.email.length > 0 " class="invalid-feedback">
+                    <div *ngIf="registerRequest.password.length === 0 " class="invalid-feedback">
                         Please enter your password. </div>
+                    <div *ngIf="!isValidPassword()" class="invalid-feedback">
+                        Your password greater than 20 characters. </div>
                 </div>
             </div>
-            <div class="mt-3 pt-2 ">
+            <div class="mt-3 pt-1">
                 <label class="form-label" for="confirmPassword">Confirm Password</label>
-                <div class="input-group">
+                <div class="input-group has-validation">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-solid fa-lock px-1"></i></span>
                     <input [type]="passwordField2Type" id="confirmPassword" [(ngModel)]="confirmPassword"
                         name="confirmPassword" class="form-control p-2 text-dark" style="line-height: 28px;"
-                        [class.is-invalid]="confirmPassword.length > 0 " required>
+                        [class.is-invalid]="confirmPassword !== registerRequest.password" required>
                     <button class="btn btn-outline-secondary border border-1" type="button"
                         (click)="togglePasswordVisibility(2)">
                         <i [ngClass]="passwordField2Type === 'password' ?'fas fa-eye-slash' :'fas fa-eye '"></i>
                     </button>
-                    <div *ngIf="confirmPassword.length > 0 " class="invalid-feedback">
-                        Please enter your comfirm password. </div>
+                    <div *ngIf="confirmPassword !== registerRequest.password" class="invalid-feedback">
+                        Passwords do not match.
+                    </div>
                 </div>
             </div>
             <!-- Optionally include fields for roles if needed -->
-            <div class="mt-3 pt-3">
-                <button class="btn btn-primary w-100 p-2" type="submit" style="line-height: 28px;">Register</button>
-            </div>
+            <button class="btn btn-primary w-100 p-2 mt-3" type="submit" style="line-height: 28px;"
+                [disabled]="!isValidEmail() || !isValidPassword()">Register</button>
+
 
         </form>
         <p class="mt-4 text-center ">Already have an account? <a routerLink="/login">Login</a></p>
         <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
             <span class="fw-nomal">{{errorMessage}}</span>
         </div>
-    </div>
+
+        <div *ngIf="successMessage" class="alert alert-success" role="alert">
+            <span class="fw-nomal">{{successMessage}} <a routerLink="/login">Login now</a></span>
+        </div>

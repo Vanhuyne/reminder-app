@@ -20,7 +20,8 @@ export class RegisterComponent implements OnInit {
   passwordField2Type: string = 'password';
 
   confirmPassword: string = '';
-  errorMessage: any;
+  errorMessage: string = '';
+  successMessage = '';
 
   constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {
@@ -30,7 +31,19 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    throw new Error('Method not implemented.');
+    console.log(this.registerRequest);
+    this.authService.register(this.registerRequest).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.successMessage = 'Registration successful';
+        this.errorMessage = '';
+      },
+      error: (error) => {
+        console.log(error);
+        this.errorMessage = error.error.message;
+        this.successMessage = '';
+      },
+    });
   }
 
   togglePasswordVisibility(fieldNumber: number): void {
@@ -41,5 +54,14 @@ export class RegisterComponent implements OnInit {
       this.passwordField2Type =
         this.passwordField2Type === 'password' ? 'text' : 'password';
     }
+  }
+
+  isValidPassword(): boolean {
+    return this.registerRequest.password.length < 20; // Adjust as per your requirements
+  }
+
+  isValidEmail(): boolean {
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(this.registerRequest.email);
   }
 }

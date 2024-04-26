@@ -21,20 +21,16 @@ export class LoginComponent implements OnInit {
     }
   }
   login(): void {
-    this.authService.login(this.email, this.password).subscribe(
-      (data) => {
+    this.authService.login(this.email, this.password).subscribe({
+      next: (data) => {
         console.log(data);
         this.router.navigate(['/home']);
       },
-      (error) => {
-        if (error.error.message != null) {
-          this.errorMessage = error.error.message;
-        } else {
-          this.errorMessage =
-            'Email or password is incorrect. Please try again.';
-        }
-      }
-    );
+      error: (error) => {
+        console.log(error);
+        this.errorMessage = error.error.message;
+      },
+    });
   }
 
   isValidPassword(): boolean {

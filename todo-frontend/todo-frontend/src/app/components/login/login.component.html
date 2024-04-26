@@ -7,7 +7,7 @@
         <form class="px-2  " (ngSubmit)="login()">
             <div class="mt-4 pt-2 ">
                 <label for="email" class="form-label">Email address</label>
-                <div class="input-group">
+                <div class="input-group has-validation">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-regular fa-envelope px-1"></i></span>
                     <input id="email" name="email" type="email" required [(ngModel)]="email" #emailInput="ngModel"
                         class="form-control p-2 text-dark" style="line-height: 28px;"
@@ -24,7 +24,7 @@
                         <a href="#" class="">Forgot password?</a>
                     </div>
                 </div>
-                <div class="input-group ">
+                <div class="input-group has-validation">
                     <span class="input-group-text " id="basic-addon1"><i class="fa-solid fa-lock px-1"></i></span>
                     <input id="password" name="password" [type]="passwordFieldType" required [(ngModel)]="password"
                         #passwordInput="ngModel" class="form-control p-2 text-dark"

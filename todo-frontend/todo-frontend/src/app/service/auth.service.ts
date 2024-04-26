@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { RegisterRequest } from '../models/register-request';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
-    localStorage.removeItem(this.TOKEN_KEY);
     const url = `${this.urlAuth}/authenticate`;
     debugger;
     return this.http.post<any>(url, { email, password }).pipe(
@@ -25,6 +25,11 @@ export class AuthService {
         }
       })
     );
+  }
+
+  register(registerRequest: RegisterRequest): Observable<any> {
+    const url = `${this.urlAuth}/register`;
+    return this.http.post<RegisterRequest>(url, registerRequest);
   }
 
   setToken(token: string): void {
