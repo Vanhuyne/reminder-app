@@ -16,6 +16,12 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<any> {
+    // check if jwt token is expired
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    if (token && this.isTokenExpired(token)) {
+      localStorage.removeItem(this.TOKEN_KEY);
+    }
+
     const url = `${this.urlAuth}/authenticate`;
     debugger;
     return this.http.post<any>(url, { email, password }).pipe(

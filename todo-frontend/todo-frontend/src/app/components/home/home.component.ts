@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
   }
 
   addNewTodo() {
+    debugger;
     const newTodo: Todo = {
       userEmail: this.getEmailFormLocalStorage(), // chưa có user nên để 4
       title: this.newTodoTitle,

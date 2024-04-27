@@ -34,7 +34,7 @@ export class TodoDetailsComponent implements OnInit {
     this.service.updateTodoById(todoId, this.todo).subscribe((response) => {
       this.todo = response;
       // redirect to the home page
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     });
   }
 }
