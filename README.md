@@ -29,7 +29,7 @@ This is a Todo List application built using Spring Boot, Spring Security Jwt, An
 
 ## Architecture Diagram
 
-![Project Architecture](architecture_screenshots/diagram.png)
+![Project Architecture](screenshots/diagram.png)
 
 This diagram illustrates the high-level architecture of the Todo List application, showing the interactions between the frontend, backend, and database components.
 
