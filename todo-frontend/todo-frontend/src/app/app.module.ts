@@ -10,12 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './components/home/home.component';
-import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { InterceptorInterceptor } from './intercepor/interceptor.interceptor';
+import { InterceptorInterceptor } from './components/todo-details/intercepor/interceptor.interceptor';
 import { RegisterComponent } from './components/register/register.component';
+import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
 
 // khai báo các module cần thiết cho ứng dụng
 @NgModule({
@@ -23,11 +23,11 @@ import { RegisterComponent } from './components/register/register.component';
     AppComponent,
     TodoComponent,
     HomeComponent,
-    TodoDetailsComponent,
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
     RegisterComponent,
+    TodoDetailsComponent,
   ],
   imports: [
     BrowserModule,

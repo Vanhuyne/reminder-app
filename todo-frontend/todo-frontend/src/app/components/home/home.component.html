@@ -53,7 +53,8 @@
                         New
                         Todo</button></div>
                 <div class="list-group-item" *ngFor="let todo of todos">
-                    <app-todo [todo]="todo" (delete)="deleteTodo($event)"></app-todo>
+                    <app-todo [todo]="todo" (delete)="deleteTodo($event)"
+                        (showDetails)="displayTodoDetails($event)"></app-todo>
                 </div>
 
             </ul>
@@ -65,45 +66,41 @@
 
         <!-- Column 3: Todo Details -->
         <div class="col-4 bg-light">
-            <div class="card mt-3">
-                <div class="card-body">
-                    <app-todo-details></app-todo-details>
+            <h4 class="mt-4">Task detail</h4>
+            <app-todo-details [selectedTodo]="selectedTodo"></app-todo-details>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Todo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form #todoForm="ngForm" (submit)="addNewTodo()">
+                        <div class="mb-3">
+                            <input class="form-control" type="text" pInputText placeholder="Todo Title"
+                                [(ngModel)]="newTodoTitle" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" type="text" pInputText placeholder="Todo Description"
+                                [(ngModel)]="newTodoDescription" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startDate">Due Date</label>
+                            <input id="dueDate" class="form-control" type="date" placeholder="Due Date" name="dueDate"
+                                [(ngModel)]="newTodoDueDate" />
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary w-100" type="submit" [disabled]="!todoForm.valid"
+                                data-bs-dismiss="modal">Add</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Todo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form #todoForm="ngForm" (submit)="addNewTodo()">
-                    <div class="mb-3">
-                        <input class="form-control" type="text" pInputText placeholder="Todo Title"
-                            [(ngModel)]="newTodoTitle" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <textarea class="form-control" type="text" pInputText placeholder="Todo Description"
-                            [(ngModel)]="newTodoDescription" name="description" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="startDate">Due Date</label>
-                        <input id="dueDate" class="form-control" type="date" placeholder="Due Date" name="dueDate"
-                            [(ngModel)]="newTodoDueDate" />
-                    </div>
-                    <div class="mb-3">
-                        <button class="btn btn-primary w-100" type="submit" [disabled]="!todoForm.valid"
-                            data-bs-dismiss="modal">Add</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -18,16 +18,19 @@ export class HomeComponent implements OnInit {
 
   totalItems: number = 0;
   currentPage: number = 1;
-  pageSize: number = 3;
+  pageSize: number = 5;
 
   newTodoTitle: string = '';
   newTodoDescription: string = '';
   newTodoDueDate: string = '';
 
+  selectedTodo: Todo | null = null;
+
   constructor(
     private service: TodoService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private todoService: TodoService
   ) {}
   ngOnInit() {
     if (!this.authService.isLoggedIn()) {
@@ -102,5 +105,9 @@ export class HomeComponent implements OnInit {
 
   getEmailFormLocalStorage() {
     return this.authService.getEmailFormToken();
+  }
+
+  displayTodoDetails(todo: Todo) {
+    this.selectedTodo = todo;
   }
 }

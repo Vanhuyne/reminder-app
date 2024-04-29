@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+
 import { Todo } from 'src/app/models/todos';
 import { TodoService } from 'src/app/service/todo.service';
 
@@ -8,33 +8,24 @@ import { TodoService } from 'src/app/service/todo.service';
   templateUrl: './todo-details.component.html',
   styleUrls: ['./todo-details.component.css'],
 })
-export class TodoDetailsComponent implements OnInit {
-  @Input() todo!: Todo;
+export class TodoDetailsComponent {
+  @Input() selectedTodo: Todo | null = null;
 
-  constructor(
-    private route: ActivatedRoute,
-    private service: TodoService,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    const todoId = this.route.snapshot.params['id'];
-    // Fetch todo details based on todoId
-    this.fetchTodoDetails(todoId);
-  }
-  // Fetch todo details based on todoId
-  fetchTodoDetails(todoId: number) {
-    this.service.getTodoById(todoId).subscribe((response) => {
-      this.todo = response;
-    });
-  }
+  constructor(private todoService: TodoService) {}
   updateTodo() {
-    // Update the todo
-    const todoId = this.route.snapshot.params['id'];
-    this.service.updateTodoById(todoId, this.todo).subscribe((response) => {
-      this.todo = response;
-      // redirect to the home page
-      this.router.navigate(['/home']);
-    });
+    if (this.selectedTodo && this.selectedTodo.id !== undefined) {
+      this.todoService
+        .updateTodoById(this.selectedTodo.id, this.selectedTodo)
+        .subscribe({
+          next: (updatedTodo) => {
+            this.selectedTodo = updatedTodo;
+          },
+          error: (error) => {
+            console.error('Error updating todo:', error);
+          },
+        });
+    } else {
+      console.error('Todo or todo ID is undefined.');
+    }
   }
 }

@@ -12,6 +12,7 @@ export class TodoComponent {
   constructor(private router: Router, private service: TodoService) {}
   @Input() todo!: Todo;
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
+  @Output() showDetails: EventEmitter<Todo> = new EventEmitter<Todo>();
 
   onDeleteClick() {
     this.delete.emit(this.todo.id);
@@ -34,7 +35,9 @@ export class TodoComponent {
       console.error('Todo or todo ID is undefined.');
     }
   }
-  onTodoClick(todoId: number = 0) {
-    this.router.navigate(['/todos', todoId]);
+
+  onTodoClick() {
+    this.showDetails.emit(this.todo);
+    console.log('Todo clicked:', this.todo);
   }
 }

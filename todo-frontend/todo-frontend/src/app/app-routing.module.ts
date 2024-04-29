@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guard/auth-guard.guard';
@@ -14,7 +13,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_USER'] }, // Specify roles in the desired format
   },
-  { path: 'todos/:id', component: TodoDetailsComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {

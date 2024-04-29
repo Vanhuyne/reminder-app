@@ -11,7 +11,7 @@
                 <p class="card-text" [ngClass]="{ 'completed-text': todo.completed }">{{ todo.title }} </p>
             </div>
             <div class="col-4 d-flex justify-content-end">
-                <i class="bi bi-pencil btn" (click)="onTodoClick(todo.id)"></i>
+                <i class="bi bi-pencil btn" (click)="onTodoClick()"></i>
                 <i class="bi bi-trash3 btn text-danger" (click)="onDeleteClick()"></i>
             </div>
         </div>

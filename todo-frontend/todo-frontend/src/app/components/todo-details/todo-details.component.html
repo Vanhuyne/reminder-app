@@ -1,20 +1,38 @@
-<form (ngSubmit)="updateTodo()" *ngIf="todo" class="mt-4">
-    <div class="mb-3">
-        <label for="title" class="form-label">Title:</label>
-        <input type="text" [(ngModel)]="todo.title" name="title" id="title" class="form-control" required>
+<div class="card mt-3" *ngIf="selectedTodo">
+    <div class="card-body">
+        <form (ngSubmit)="updateTodo()" #todoForm="ngForm">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Title"
+                    [(ngModel)]="selectedTodo.title" required>
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label">Description:</label>
+                <textarea type="text" class="form-control" id="description" name="description" placeholder="Description"
+                    [(ngModel)]="selectedTodo.description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="dueDate" class="form-label">Due date:</label>
+                <input id="dueDate" class="form-control" type="date" placeholder="Due Date" name="dueDate"
+                    [ngModel]="selectedTodo.dueDate | date:'yyyy-MM-dd'"
+                    (ngModelChange)="selectedTodo.dueDate=$event" />
+            </div>
+            <!-- Add other form controls for other todo details -->
+            <button type="submit" class="btn btn-warning" [disabled]="!todoForm.valid">Save changes</button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label for="description" class="form-label">Description:</label>
-        <textarea [(ngModel)]="todo.description" name="description" id="description" class="form-control"
-            required></textarea>
+</div>
+
+<!-- Bootstrap Toast for successful save message -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert"
+        aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+        <div class="d-flex">
+            <div class="toast-body">
+                Todo saved successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="dueDate" class="form-label">Due Date:</label>
-        <input type="date" [(ngModel)]="todo.dueDate" name="dueDate" id="dueDate" class="form-control" required>
-    </div>
-    <div class="mb-3 form-check">
-        <input type="checkbox" [(ngModel)]="todo.completed" name="completed" id="completed" class="form-check-input">
-        <label for="completed" class="form-check-label">Completed</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
+</div>
