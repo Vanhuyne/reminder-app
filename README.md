@@ -1,6 +1,6 @@
 # Todo List Application
 
-This is a Todo List application built using Spring Boot, Spring Security, AngularTS, and MySQL. It allows users to manage their tasks efficiently.
+This is a Todo List application built using Spring Boot, Spring Security Jwt, AngularTS, and MySQL. It allows users to manage their tasks efficiently.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ This is a Todo List application built using Spring Boot, Spring Security, Angula
 
 ## Features
 
-- User authentication and authorization using Spring Security.
+- User authentication and authorization using Spring Security JwT.
 - CRUD operations for managing tasks.
 - User-friendly interface built with AngularTS.
 - Data persistence using MySQL database.
@@ -29,7 +29,7 @@ This is a Todo List application built using Spring Boot, Spring Security, Angula
 
 ## Architecture Diagram
 
-![Project Architecture](architecture_screenshoot/diagram.png)
+![Project Architecture](architecture_screenshots/diagram.png)
 
 This diagram illustrates the high-level architecture of the Todo List application, showing the interactions between the frontend, backend, and database components.
 
