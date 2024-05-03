@@ -10,5 +10,6 @@ public interface TodoService {
     TodoDTO getTodoById(Long todoId);
     Page<TodoDTO> findAllPaginated(int page, int size);
     Page<TodoDTO> findAllPaginatedByEmail(String email, int page, int size);
-
+    Page<TodoDTO> findAllPaginatedByCompleted(String email,int page, int size);
+    Page<TodoDTO> findAllPaginatedByRemaining(String email, int page, int size);
 }

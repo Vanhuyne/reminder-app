@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TodoComponent } from '../todo/todo.component';
 import { Todo } from 'src/app/models/todos';
-import { HttpClient } from '@angular/common/http';
 import { TodoService } from 'src/app/service/todo.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
@@ -12,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  activeNavItem: string = 'Today';
+
   todos: Todo[] = [];
 
   email: string = '';
@@ -26,19 +26,22 @@ export class HomeComponent implements OnInit {
 
   selectedTodo: Todo | null = null;
 
+  totalTodoCompleted: number = 0;
+  totalTodoRemaining: number = 0;
+
   constructor(
     private service: TodoService,
     private authService: AuthService,
-    private router: Router,
-    private todoService: TodoService
+    private router: Router
   ) {}
+
   ngOnInit() {
     if (!this.authService.isLoggedIn()) {
       // redirect to login page
       this.authService.logout();
       this.router.navigate(['/login']);
     } else {
-      this.loadTodos();
+      this.action(this.activeNavItem);
     }
   }
 
@@ -77,20 +80,15 @@ export class HomeComponent implements OnInit {
   // set page
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.loadTodos();
+    this.action(this.activeNavItem);
   }
+
   // action delete todo
   deleteTodo(todoId: number) {
     this.service.deleteTodoById(todoId).subscribe(
       () => {
         console.log('Todo deleted successfully');
-
-        // After deleting the todo, reload the todos
-        if (this.todos.length === 1) {
-          this.loadTodos();
-        } else {
-          this.loadTodos();
-        }
+        this.action(this.activeNavItem);
       },
       (error) => {
         console.error('Error deleting todo:', error);
@@ -98,6 +96,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  reloadTodoList() {
+    this.action(this.activeNavItem);
+  }
   // Calculate total pages based on total items and page size
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.pageSize);
@@ -109,5 +110,54 @@ export class HomeComponent implements OnInit {
 
   displayTodoDetails(todo: Todo) {
     this.selectedTodo = todo;
+  }
+
+  setActiveNavItem(navItem: string) {
+    this.activeNavItem = navItem;
+    switch (navItem) {
+      case 'Today':
+        this.loadTodos();
+        break;
+      case 'Completed':
+        this.loadTodosCompleted();
+        break;
+      case 'Remaining':
+        this.loadRemainingTodos();
+        break;
+      default:
+      // Handle other cases or fallback
+    }
+  }
+  loadRemainingTodos() {
+    this.email = this.getEmailFormLocalStorage();
+    this.service
+      .getTodoRemaining(this.currentPage - 1, this.pageSize, this.email)
+      .subscribe((response: any) => {
+        this.todos = response.content;
+        console.log('todos', this.todos);
+        this.totalItems = response.totalElements;
+      });
+  }
+
+  loadTodosCompleted() {
+    this.email = this.getEmailFormLocalStorage();
+    this.service
+      .getTodoCompleted(this.currentPage - 1, this.pageSize, this.email)
+      .subscribe((response: any) => {
+        this.todos = response.content;
+        console.log('todos', this.todos);
+        this.totalItems = response.totalElements;
+      });
+  }
+
+  // modify action active todo
+  action(type: string) {
+    if (type === 'Today') {
+      this.loadTodos();
+    } else if (type === 'Completed') {
+      this.loadTodosCompleted();
+    } else {
+      this.loadRemainingTodos();
+    }
   }
 }

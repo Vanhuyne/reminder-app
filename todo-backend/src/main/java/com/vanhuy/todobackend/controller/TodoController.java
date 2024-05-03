@@ -73,5 +73,22 @@ public class TodoController {
         return new ResponseEntity<>(todos, HttpStatus.OK);
     }
 
+    @GetMapping("/completed/{email}")
+    public ResponseEntity<Page<TodoDTO>> getCompletedTodos(
+            @PathVariable String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
+        Page<TodoDTO> todos = todoService.findAllPaginatedByCompleted(email ,page, size);
+        return new ResponseEntity<>(todos, HttpStatus.OK);
+    }
+
+    @GetMapping("/remaining/{email}")
+    public ResponseEntity<Page<TodoDTO>> getRemainingTodos(
+            @PathVariable String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
+        Page<TodoDTO> todos = todoService.findAllPaginatedByRemaining(email ,page, size);
+        return new ResponseEntity<>(todos, HttpStatus.OK);
+    }
 
 }

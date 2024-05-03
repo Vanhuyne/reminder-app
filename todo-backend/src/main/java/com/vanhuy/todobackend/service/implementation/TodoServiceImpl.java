@@ -100,4 +100,33 @@ public class TodoServiceImpl implements TodoService {
         });
     }
 
+    @Override
+    public Page<TodoDTO> findAllPaginatedByCompleted(String email, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Todo> resultPage = todoRepo.findByUserEmailAndCompletedIsTrue(email, pageable);
+
+
+        // Convert Page<Todo> to Page<TodoDTO>
+        return resultPage.map(todo -> {
+            TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
+            todoDTO.setUserEmail(todo.getUser().getEmail());
+            return todoDTO;
+        });
+    }
+
+    @Override
+    public Page<TodoDTO> findAllPaginatedByRemaining(String email, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Todo> resultPage = todoRepo.findByUserEmailAndCompletedIsFalse(email, pageable);
+
+
+        // Convert Page<Todo> to Page<TodoDTO>
+        return resultPage.map(todo -> {
+            TodoDTO todoDTO = modelMapper.map(todo, TodoDTO.class);
+            todoDTO.setUserEmail(todo.getUser().getEmail());
+            return todoDTO;
+        });
+    }
+
+
 }

@@ -23,14 +23,14 @@ export class TodoComponent {
     // Check if todo and its id are defined before making the API call
     if (this.todo && this.todo.id !== undefined) {
       // Call the updateTodoById method with the todo's ID and the updated todo object
-      this.service.updateTodoById(this.todo.id, this.todo).subscribe(
-        (updatedTodo) => {
-          this.todo = updatedTodo;
+      this.service.updateTodoById(this.todo.id, this.todo).subscribe({
+        next: (response) => {
+          console.log('Todo updated:', response);
         },
-        (error) => {
-          console.error('Error updating todo:', error);
-        }
-      );
+        error: (error) => {
+          console.error('There was an error updating the todo:', error);
+        },
+      });
     } else {
       console.error('Todo or todo ID is undefined.');
     }

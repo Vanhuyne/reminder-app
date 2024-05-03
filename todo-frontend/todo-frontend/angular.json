@@ -25,9 +25,13 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -58,12 +62,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "todo-frontend:build:production"
+              "buildTarget": "todo-frontend:build:production"
             },
             "development": {
-              "browserTarget": "todo-frontend:build:development"
+              "buildTarget": "todo-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "todo-frontend:build"
+            "buildTarget": "todo-frontend:build"
           }
         },
         "test": {
@@ -87,13 +94,13 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/scss/bootstrap.css",
-              "./node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "src/styles.scss"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "src/styles.css"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           }
         }

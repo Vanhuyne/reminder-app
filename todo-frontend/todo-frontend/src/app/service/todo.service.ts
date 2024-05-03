@@ -8,6 +8,8 @@ import { Todo } from '../models/todos';
 })
 export class TodoService {
   private baseUrl = 'http://localhost:8080/api/v1/todos';
+  // private baseUrl =
+  //   'https://todo-backend-production-cdfa.up.railway.app/api/v1/todos';
   constructor(private http: HttpClient) {}
 
   getAllTodos(): Observable<any> {
@@ -43,5 +45,31 @@ export class TodoService {
   updateTodoById(id: number, todo: Todo): Observable<Todo> {
     const url = `${this.baseUrl}/${id}`;
     return this.http.put<Todo>(url, todo);
+  }
+
+  // get todo completed
+  getTodoCompleted(
+    pageNumber: number,
+    pageSize: number,
+    email: string
+  ): Observable<any> {
+    const url = `${this.baseUrl}/completed/${email}`;
+    const params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('size', pageSize.toString());
+    return this.http.get<any>(url, { params });
+  }
+
+  // get todo remaining
+  getTodoRemaining(
+    pageNumber: number,
+    pageSize: number,
+    email: string
+  ): Observable<any> {
+    const url = `${this.baseUrl}/remaining/${email}`;
+    const params = new HttpParams()
+      .set('page', pageNumber.toString())
+      .set('size', pageSize.toString());
+    return this.http.get<any>(url, { params });
   }
 }

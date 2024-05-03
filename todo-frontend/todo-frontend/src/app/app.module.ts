@@ -13,9 +13,10 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { InterceptorInterceptor } from './components/todo-details/intercepor/interceptor.interceptor';
+import { InterceptorInterceptor } from './intercepor/interceptor.interceptor';
 import { RegisterComponent } from './components/register/register.component';
 import { TodoDetailsComponent } from './components/todo-details/todo-details.component';
+import { ToastrModule } from 'ngx-toastr';
 
 // khai báo các module cần thiết cho ứng dụng
 @NgModule({
@@ -37,6 +38,7 @@ import { TodoDetailsComponent } from './components/todo-details/todo-details.com
     NgbPaginationModule,
     // Import Angular forms module
     FormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     // Add the interceptor to the providers array

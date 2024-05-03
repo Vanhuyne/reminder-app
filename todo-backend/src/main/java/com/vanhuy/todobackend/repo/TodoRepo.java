@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TodoRepo extends JpaRepository<Todo, Long> {
     Page<Todo> findAllByUserEmail(String email, Pageable pageable);
+    Page<Todo> findByUserEmailAndCompletedIsTrue(String email, Pageable pageable);
+    Page<Todo> findByUserEmailAndCompletedIsFalse(String email, Pageable pageable);
 }
