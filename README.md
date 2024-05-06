@@ -17,6 +17,7 @@ This is a fullstack Todo List application built using Spring Boot, Spring Securi
 
 - User authentication and authorization using Spring Security JWT token.
 - CRUD operations for managing tasks.
+- Send emails via thymeleaf template engine .
 - Categorize completed and unfinished user tasks
 - User-friendly interface built with Angular single page application.
 - Data persistence using MySQL database.
