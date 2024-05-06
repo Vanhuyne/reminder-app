@@ -3,5 +3,7 @@
 }
 .nav-item {
     cursor: pointer;
-    
+}
+.bg-info {
+    background-color: #70c4ff !important;
 }

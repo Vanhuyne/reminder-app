@@ -7,9 +7,9 @@ import { Todo } from '../models/todos';
   providedIn: 'root',
 })
 export class TodoService {
-  private baseUrl = 'http://localhost:8080/api/v1/todos';
-  // private baseUrl =
-  //   'https://todo-backend-production-cdfa.up.railway.app/api/v1/todos';
+  // private baseUrl = 'http://localhost:8080/api/v1/todos';
+  private baseUrl =
+    'https://todo-backend-production-cdfa.up.railway.app/api/v1/todos';
   constructor(private http: HttpClient) {}
 
   getAllTodos(): Observable<any> {

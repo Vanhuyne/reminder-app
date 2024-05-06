@@ -1,0 +1,9 @@
+.wish {
+    background-color: #ffc107; /* Yellow background */
+    color: #333; /* Dark text color */
+    padding: 8px 14px;
+    border-radius: 4px; /* Rounded corners */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    font-size: 18px; /* Font size */
+}

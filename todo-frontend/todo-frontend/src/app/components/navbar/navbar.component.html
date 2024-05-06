@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-light bg-body-tertiary border-bottom border-secondary fixed-top">
     <div class="container ">
-        <a class="navbar-brand p-2 me-5" routerLink="/home"><i class="fa-solid fa-registered"></i>
+        <a class="navbar-brand px-5 me-4 " routerLink="/home"><i class="fa-solid fa-registered "
+                style="font-size: 25px;"></i>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,9 +9,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="text-center">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center">
-                    <li class="nav-item ">
-                        <a class="nav-link " aria-current="page" href="#">Home</a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-5 ">
+                    <li class="nav-item ms-5 ps-5">
+                        <figure class="text-center mt-3">
+                            <blockquote class="blockquote">
+                                <h4>Welcome to the todo app, have a nice day ... 🏝🏝</h4>
+                            </blockquote>
+
+                        </figure>
                     </li>
 
                 </ul>
@@ -22,7 +28,6 @@
                         {{email}}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><a class="dropdown-item" href="#" (click)="logout()">Logout</a></li>
                     </ul>
                 </li>

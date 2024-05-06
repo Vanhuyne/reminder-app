@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { RegisterRequest } from 'src/app/models/register-request';
 import { AuthService } from 'src/app/service/auth.service';
 
@@ -23,7 +24,11 @@ export class RegisterComponent implements OnInit {
   errorMessage: string = '';
   successMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/home']);
@@ -35,11 +40,15 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.registerRequest).subscribe({
       next: (data) => {
         console.log(data);
+        this.toastr.success('Registration successful!', 'Success', {
+          timeOut: 1500,
+        });
         this.successMessage = 'Registration successful';
         this.errorMessage = '';
       },
       error: (error) => {
         console.log(error);
+        this.toastr.error('Registration failed!', 'Error', { timeOut: 1500 });
         this.errorMessage = error.error.message;
         this.successMessage = '';
       },
@@ -63,5 +72,9 @@ export class RegisterComponent implements OnInit {
   isValidEmail(): boolean {
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(this.registerRequest.email);
+  }
+
+  passwordsMatch(): boolean {
+    return this.registerRequest.password === this.confirmPassword;
   }
 }

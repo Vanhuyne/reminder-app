@@ -1,34 +1,41 @@
 <!-- navbar -->
 <app-navbar></app-navbar>
 
-<div class="row">
+<div class="row mt-3">
     <div class="col-12 mb-2">
         <div class="d-flex justify-content-end mb-2">
-            <div class="container pt-1 border border-1 shadow p-3 mb-5 bg-body rounded-2">
+            <div class="container pt-1 border border-1 shadow p-3  bg-body rounded-2">
                 <div class="row mt-3">
-                    <div class="col-2 bg-light">
-                        <ul class="nav flex-column mt-3">
+                    <div class="col-2 bg-info rounded-2">
+                        <ul class="nav flex-column mt-3 py-2">
                             <li class="nav-item pt-2 ">
-                                <a class="nav-link text-muted rounded-1" (click)="setActiveNavItem('Today')"
-                                    [class.bg-primary]="activeNavItem === 'Today'">Today<span
-                                        class="badge rounded-pill text-bg-dark px-2 ms-2">{{totalItems}}</span></a>
+
+                                <a class="nav-link text-white rounded-1" (click)="setActiveNavItem('Today')"
+                                    [class.bg-primary]="activeNavItem === 'Today'"><i
+                                        class="fa-solid fa-book pe-2"></i>Today</a>
                             </li>
                             <li class="nav-item pt-2">
-                                <a class="nav-link text-muted rounded-1" (click)="setActiveNavItem('Completed')"
-                                    [class.bg-primary]="activeNavItem === 'Completed'">Completed<span
+                                <a class="nav-link text-white rounded-1" (click)="setActiveNavItem('Completed')"
+                                    [class.bg-success]="activeNavItem === 'Completed'"><i
+                                        class="fa-solid fa-check-to-slot pe-2"></i>Completed<span
                                         class="badge rounded-pill text-bg-dark px-2 ms-2"></span></a>
                             </li>
                             <li class="nav-item pt-2">
-                                <a class="nav-link text-muted rounded-1" (click)="setActiveNavItem('Remaining')"
-                                    [class.bg-primary]="activeNavItem === 'Remaining'">Remaining</a>
+                                <a class="nav-link text-white rounded-1" (click)="setActiveNavItem('Remaining')"
+                                    [class.bg-danger]="activeNavItem === 'Remaining'"><i
+                                        class="fa-solid fa-circle-exclamation pe-2"></i>Remaining</a>
                             </li>
                         </ul>
 
                     </div>
                     <!-- section: Today's Todos -->
                     <div class=" col-6 bg-white ">
-                        <h2 class="mt-3">{{ activeNavItem }}'s Todos</h2>
-                        <ul class="list-group ">
+                        <div class="row mt-2 ">
+                            <h2 class="col-6 ">{{ activeNavItem }}'s Todos</h2>
+                            <h5 class="col-5 p-2 d-flex justify-content-end"><span
+                                    class="badge bg-dark">{{todos.length}}</span></h5>
+                        </div>
+                        <ul class="list-group mt-2">
                             <div class="list-group-item d-flex justify-content-end" *ngIf="activeNavItem === 'Today'">
                                 <button type="button" class="btn btn-primary border rounded-1 " data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"><i class="fa-solid fa-plus me-2"></i>Add
@@ -47,8 +54,10 @@
                     </div>
 
                     <!-- Column 3: Todo Details -->
-                    <div class="col-4 bg-light">
+                    <div class="col-4 ">
                         <h4 class="mt-4">Task detail</h4>
+
+                        <div class="pt-3 text-secondary" *ngIf="!selectedTodo"> Select to the todo ...</div>
                         <app-todo-details [selectedTodo]="selectedTodo"
                             (todoUpdated)="reloadTodoList()"></app-todo-details>
                     </div>

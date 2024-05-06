@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -14,7 +15,11 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   passwordFieldType: string = 'password';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/home']);
@@ -24,11 +29,13 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.email, this.password).subscribe({
       next: (data) => {
         console.log(data);
+        this.toastr.success('Login successful!', 'Success', { timeOut: 1500 });
         this.router.navigate(['/home']);
       },
       error: (error) => {
         console.log(error);
         this.errorMessage = error.error.message;
+        this.toastr.error('Login failed!', 'Error', { timeOut: 1500 });
       },
     });
   }

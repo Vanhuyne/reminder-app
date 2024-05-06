@@ -8,9 +8,9 @@ import { RegisterRequest } from '../models/register-request';
   providedIn: 'root',
 })
 export class AuthService {
-  private urlAuth = 'http://localhost:8080/api/v1/auth';
-  // private urlAuth =
-  //   'https://todo-backend-production-cdfa.up.railway.app/api/v1/auth';
+  // private urlAuth = 'http://localhost:8080/api/v1/auth';
+  private urlAuth =
+    'https://todo-backend-production-cdfa.up.railway.app/api/v1/auth';
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
   private readonly TOKEN_KEY = 'auth-token';
